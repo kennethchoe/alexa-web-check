@@ -4,7 +4,7 @@ This repository contains entire source code to implement [**Web Check**](https:/
 
 Web Check is an Alexa skill that checks if any website is up. User can visit [alexa.agilesalt.com](https://alexa.agilesalt.com) to register websites, and say *Alexa, ask Web Check to check my sites*. Registered websites are saved on DynamoDB.
 
-[Click to see System Overview.](https://alexa.agilesalt.com/Content/diagram.png)
+![System Overview](https://raw.githubusercontent.com/kennethchoe/alexa-web-check/master/resources/diagram.png)
 
 
 # How to Build Your Own #

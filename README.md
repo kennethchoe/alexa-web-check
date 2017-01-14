@@ -17,7 +17,7 @@ Web Check is an Alexa skill that checks if any website is up. User can visit [al
 
 ### Amazon Configuration ###
 
-Amazon documentation is rather sporatic. I documented what I remember - if you hit any issues, let me know. I will update my explanation.
+Amazon documentation is rather sporatic. I documented what I remember - if you hit any issues, open an Issue. I will try to follow up as much as I can and update my explanation.
 
 1. Follow steps described in [Create Alexa skill with Login with Amazon](https://developer.amazon.com/blogs/post/Tx3CX1ETRZZ2NPC/alexa-account-linking-5-steps-to-seamlessly-link-your-alexa-skill-with-login-with-amazon) to create Login with Amazon (LWA) Security Profile and an Alexa skill.
 2. On LWA Security Profile - Web Settings, specify Allowed Origins as your web site to be published, e.g. "https://alexa.agilesalt.com". Keep in mind that it accepts https only.

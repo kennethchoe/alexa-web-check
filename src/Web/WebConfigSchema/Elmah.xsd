@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://Elmah.Configuration" elementFormDefault="qualified" targetNamespace="http://Elmah.Configuration" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="elmah">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="security" type="tns:securityCT" minOccurs="0" maxOccurs="1" />
+        <xs:element name="errorMail" type="tns:errorMailCT" minOccurs="0" maxOccurs="1" />
+        <xs:element name="errorLog" type="tns:errorLogCT" minOccurs="0" maxOccurs="1" />
+        <xs:element name="errorFilter" type="tns:errorFilterCT" minOccurs="0" maxOccurs="1" />
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="security" type="tns:securityCT" />
+  <xs:element name="errorMail" type="tns:errorMailCT" />
+  <xs:element name="errorLog" type="tns:errorLogCT" />
+  <xs:element name="errorFilter" type="tns:errorFilterCT" />
+  <xs:complexType name="securityCT">
+    <xs:attribute name="allowRemoteAccess" use="optional" type="xs:boolean" />
+  </xs:complexType>
+  <xs:complexType name="errorMailCT">
+    <xs:attribute name="to" type="xs:string" />
+    <xs:attribute name="from" type="xs:string" />
+    <xs:attribute name="cc" type="xs:string" />
+    <xs:attribute name="subject" type="xs:string" />
+    <xs:attribute name="priority">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="normal" />
+          <xs:enumeration value="high" />
+          <xs:enumeration value="low" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="async" type="xs:boolean" />
+    <xs:attribute name="smtpServer" type="xs:string" />
+    <xs:attribute name="smtpPort" type="xs:int" />
+    <xs:attribute name="userName" type="xs:string" />
+    <xs:attribute name="password" type="xs:string" />
+    <xs:attribute name="noYsod" type="xs:boolean" />
+    <xs:attribute name="useSsl" type="xs:boolean" />
+  </xs:complexType>
+  <xs:complexType name="errorLogCT">
+    <xs:attribute name="type" type="tns:errorLogTypeEx" use="required" />
+    <xs:attribute name="size" type="xs:int" />
+    <xs:attribute name="logPath" type="xs:string" />
+    <xs:attribute name="connectionString" type="xs:string" />
+    <xs:attribute name="connectionStringName" type="xs:string" />
+    <xs:attribute name="providerName" type="xs:string" />
+    <xs:attribute name="applicationName"  type="xs:string" />
+    <xs:attribute name="LogId"  type="xs:string" />
+    <xs:attribute name="LogIdKey"  type="xs:string" />
+  </xs:complexType>
+  <xs:simpleType name="errorLogType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Elmah.MemoryErrorLog, Elmah" />
+      <xs:enumeration value="Elmah.XmlFileErrorLog, Elmah" />
+      <xs:enumeration value="Elmah.SqlErrorLog, Elmah" />
+      <xs:enumeration value="Elmah.AccessErrorLog, Elmah" />
+      <xs:enumeration value="Elmah.OracleErrorLog, Elmah" />
+      <xs:enumeration value="Elmah.SQLiteErrorLog, Elmah" />
+      <xs:enumeration value="Elmah.VistaDBErrorLog, Elmah" />
+      <xs:enumeration value="Elmah.Io.ErrorLog, Elmah.Io" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="errorLogTypeEx">
+    <xs:union memberTypes="tns:errorLogType xs:string"/>
+  </xs:simpleType>
+  <xs:complexType name="errorFilterCT">
+    <xs:sequence minOccurs="0" maxOccurs="1">
+      <xs:element name="test" type="tns:testType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="testType">
+    <xs:choice minOccurs="1" maxOccurs="unbounded">
+      <xs:group ref="tns:assertionGroup" />
+    </xs:choice>
+  </xs:complexType>
+  <xs:group name="assertionGroup">
+    <xs:choice>
+      <xs:element name="equal" type="tns:valueCheck" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="not-equal" type="tns:valueCheck" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="greater" type="tns:valueCheck" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="greater-or-equal " type="tns:valueCheck" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="lesser" type="tns:valueCheck" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="lesser-or-equal" type="tns:valueCheck" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="is-type" type="tns:typeCheck" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="is-type-compatible" type="tns:typeCheck" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="regex" type="tns:regexCheck" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="jscript" type="tns:jscriptAssertion" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="or" type="tns:compositeAssertion" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="and" type="tns:compositeAssertion" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="not" type="tns:compositeAssertion" minOccurs="0" maxOccurs="unbounded" />
+    </xs:choice>
+  </xs:group>
+  <xs:complexType name="compositeAssertion">
+    <xs:choice minOccurs="1" maxOccurs="unbounded">
+      <xs:group ref="tns:assertionGroup" />
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="jscriptAssertion">
+    <xs:all minOccurs="1" maxOccurs="1">
+      <xs:element name="expression" />
+    </xs:all>
+  </xs:complexType>
+  <xs:complexType name="valueCheck">
+    <xs:attribute name="binding" type="tns:bindingExpressionEx" >
+      <xs:annotation>
+        <xs:documentation>Same expression and syntax you specify to the Eval method when data-binding within the server-side markup of ASP.NET pages and user controls.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="value" type="xs:string" />
+    <xs:attribute name="type" type="tns:typeCodeEx" />
+  </xs:complexType>
+  <xs:complexType name="typeCheck">
+    <xs:attribute name="binding" type="xs:string" />
+    <xs:attribute name="type" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="regexCheck">
+    <xs:attribute name="binding" type="xs:string" />
+    <xs:attribute name="pattern" type="xs:string" />
+  </xs:complexType>
+  <xs:simpleType name="bindingExpression">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Exception" />
+      <xs:enumeration value="BaseException" />
+      <xs:enumeration value="HttpStatusCode" />
+      <xs:enumeration value="Context" />
+      <xs:enumeration value="FilterSource" />
+      <xs:enumeration value="FilterSourceType" />
+      <xs:enumeration value="FilterSourceAssemblyName" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="bindingExpressionEx">
+    <xs:union memberTypes="tns:bindingExpression xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="typeCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Boolean" />
+      <xs:enumeration value="Byte" />
+      <xs:enumeration value="Char" />
+      <xs:enumeration value="DateTime" />
+      <xs:enumeration value="DBNull" />
+      <xs:enumeration value="Decimal" />
+      <xs:enumeration value="Double" />
+      <xs:enumeration value="Empty" />
+      <xs:enumeration value="Int16" />
+      <xs:enumeration value="Int32" />
+      <xs:enumeration value="Int64" />
+      <xs:enumeration value="Object" />
+      <xs:enumeration value="SByte" />
+      <xs:enumeration value="Single" />
+      <xs:enumeration value="String" />
+      <xs:enumeration value="UInt16" />
+      <xs:enumeration value="UInt32" />
+      <xs:enumeration value="UInt64" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="typeCodeEx">
+    <xs:union memberTypes="tns:typeCode xs:string"/>
+  </xs:simpleType>
+</xs:schema>

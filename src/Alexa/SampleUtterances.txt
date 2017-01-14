@@ -1,0 +1,12 @@
+CheckIntent check {amazon |Hostname}
+CheckIntent check {amazon |Hostname} is up
+CheckIntent see if {google |Hostname} is down
+CheckIntent see if {google |Hostname} is running
+CheckMySitesIntent see if my site is running
+CheckMySitesIntent see if my sites are running
+CheckMySitesIntent see if my site is up
+CheckMySitesIntent see if my sites are up
+CheckMySitesIntent see if my site is down
+CheckMySitesIntent see if my sites are down
+CheckMySitesIntent check my site
+CheckMySitesIntent check my sites

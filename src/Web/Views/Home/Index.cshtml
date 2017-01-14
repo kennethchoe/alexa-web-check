@@ -1,0 +1,107 @@
+﻿@using System.Configuration
+@using Web.Models
+@model HomeIndexModel
+@{
+    ViewBag.Title = "Alexa " + Model.AppName;
+}
+<div id="app">
+    <a v-on:click="logout" href="#">Logout</a>
+
+    <h1>Say <i>Alexa, ask @Model.AppName to check my sites!</i></h1>
+    <p>And Alexa will check web sites you listed below.</p>
+
+    <div v-for="webSite in webSites">
+        <label>{{ webSite }}</label>
+        <a v-on:click="removeWebSite(webSite)" href="#">delete</a>
+    </div>
+    <input type="text"
+            v-model="newWebSite"
+            placeholder="Add new web site"
+            v-on:blur="add"
+            v-on:keyup.enter="add"
+            v-on:keyup.esc="cancelAdd">
+    <label v-text="errorMessage" style="color: red"></label>
+    <br /><br />
+    Access Key: <input type="text" value="@Model.AccessToken" disabled />
+</div>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script type="text/javascript">
+
+    var webSiteStorage = {
+        fetch: function (callback) {
+            $.ajax({
+                url: '@Url.Action("GetWebSites", "Home")'
+            }).done(callback);
+        },
+        save: function (webSites) {
+            $.ajax({
+                method: 'POST',
+                url: '@Url.Action("Save", "Home")',
+                data: { webSites: webSites }
+            });
+        }
+    }
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            webSites: [],
+            newWebSite: '',
+            editedWebSite: null,
+            errorMessage: ''
+        },
+        watch: {
+            webSites: {
+                handler: function (webSites) {
+                    webSiteStorage.save(webSites);
+                },
+                deep: true
+            }
+        },
+        methods: {
+            logout: function () {
+                window.amazon.Login.logout();
+                location.href = "@Url.Action("LogOff", "Account")";
+            },
+            init: function() {
+                var self = this;
+                webSiteStorage.fetch(function (result) {
+                    if (result.length === 0)
+                        result.push('amazon.com');
+
+                    self.webSites = result;
+                });
+            },
+            add: function () {
+                var value = this.newWebSite && this.newWebSite.trim();
+                if (!value) {
+                    return;
+                }
+                if (value.indexOf("/") > 0) {
+                    this.errorMessage = "Just input host name. No http://, no https://, no /.";
+                    return;
+                }
+
+                this.errorMessage = '';
+                this.webSites.push(this.newWebSite);
+                this.newWebSite = '';
+            },
+
+            removeWebSite: function (webSite) {
+                this.webSites.splice(this.webSites.indexOf(webSite), 1);
+            },
+
+            cancelAdd: function () {
+                this.newWebSite = null;
+            }
+        }
+    });
+
+    app.init();
+
+    window.onAmazonLoginReady = function () {
+        window.amazon.Login.setClientId('@ConfigurationManager.AppSettings["AmazonClientId"]');
+    };
+
+</script>
+<script src="https://api-cdn.amazon.com/sdk/login1.js"></script>

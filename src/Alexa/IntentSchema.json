@@ -1,0 +1,25 @@
+	{
+	  "intents": [
+	    {
+	      "intent": "CheckIntent",
+          "slots": [
+            {
+              "name": "Hostname",
+              "type": "AMAZON.LITERAL"
+            }
+          ]
+	    },
+			{
+	      "intent": "CheckMySitesIntent"
+	    },
+			{
+	      "intent": "AMAZON.HelpIntent"
+	    },
+	    {
+	      "intent": "AMAZON.StopIntent"
+	    },
+	    {
+	      "intent": "AMAZON.CancelIntent"
+	    }
+	  ]
+	}

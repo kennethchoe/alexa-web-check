@@ -1,0 +1,42 @@
+﻿@model Web.Models.LoginModel
+@{
+    ViewBag.Title = "Login";
+}
+<h1><img src="@Url.Content("~/Content/logo small.png")"/> Alexa @Model.AppName</h1>
+<p>@Model.AppName is an Alexa skill that checks if any website is up. <br/>
+    On this website, you can register your websites and ask @Model.AppName to <i>check my sites</i>. <br/>
+    To use the service, login with Amazon first. @Html.ActionLink("You ask why?", "Privacy", "Home") </p>
+<form id="login-form" method="post">
+    <input type="hidden" name="AccessToken" />
+    <a href="#" id="LoginWithAmazon">
+        <img alt="Login with Amazon"
+             src="https://images-na.ssl-images-amazon.com/images/G/01/lwa/btnLWA_gold_156x32.png"
+             width="156" height="32" />
+    </a>
+</form>
+<script type="text/javascript">
+    $('#LoginWithAmazon').click(function() {
+        var options = { scope: 'profile' };
+        if ('@Model.MockMode' === "true")
+            // put fresh access key to test without publishing it
+            authorizeCallback({ access_token: "@Model.AccessTokenForTest" });
+        else
+            window.amazon.Login.authorize(options, authorizeCallback);
+
+        return false;
+    });
+
+    function authorizeCallback(response) {
+        if (response.error) {
+            alert('oauth error ' + response.error);
+            return;
+        }
+        $('input[name="AccessToken"]').val(response.access_token);
+        $("#login-form").submit();
+    }
+
+    window.onAmazonLoginReady = function() {
+        window.amazon.Login.setClientId('@Model.AmazonClientId');
+    };
+</script>
+<script src="https://api-cdn.amazon.com/sdk/login1.js"></script>

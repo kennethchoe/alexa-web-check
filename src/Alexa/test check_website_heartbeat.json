@@ -1,0 +1,33 @@
+{
+  "version": "1.0",
+  "session": {
+    "new": true,
+    "sessionId": "SessionId.380b48a6-af36-4399-98bb-5dfcd50d4969",
+    "application": {
+      "applicationId": "amzn1.ask.skill.2ebfaafc-bff1-4c4c-af3b-295050c0b337"
+    },
+    "attributes": {},
+    "user": {
+      "userId": "amzn1.ask.account.AGZB3G3SXS7EEGJCTUDZQOTH6KOIU36XHZ6J2PYZWEXUMOHLWK27EON7CYREQBKUVZLZ7B35JCCEV5MXGHHVYVPZNPVM4PQOW5UO6MC7P3KNOHUF5OIAP76JP7WUA2GECQPZV4C5CTQ7DX3RAJMPQC6DBUPQCNCYQZ7OHHUSRWZ453AZTZVY5IAYHAYBR5T54L7UQZRHUKWLNMA"
+    }
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.df283cb1-25ea-4e82-938b-97693af75a2f",
+    "timestamp": "2016-10-25T21:53:22Z",
+    "locale": "en-US",
+    "intent": {
+      "name": "CheckIntent",
+      "slots": {
+        "Protocol": {
+          "name": "Protocol",
+          "value": "HTTPS"
+        },
+        "Hostname": {
+          "name": "Hostname",
+          "value": "google.com"
+        }
+      }
+    }
+  }
+}

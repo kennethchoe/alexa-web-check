@@ -1,0 +1,24 @@
+{
+  "name": "alexa_web_check",
+  "version": "1.0.0",
+  "description": "Lambda function for Alexa skill Web Check",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "kenneth.choe@gmail.com",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kennethchoe/alexa_web_check.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kennethchoe/alexa_web_check/issues"
+  },
+  "homepage": "https://github.com/kennethchoe/alexa_web_check",
+  "dependencies": {
+    "dynamodb-doc": "^1.0.0",
+    "request": "^2.79.0"
+  }
+}

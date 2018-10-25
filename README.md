@@ -2,7 +2,7 @@
 
 This repository contains entire source code to implement [**Web Check**](https://www.amazon.com/dp/B01M4NX2TM/ref=syps?s=digital-skills&ie=UTF8&qid=1484227856) - an Alexa skill with Account Linking using *Login with Amazon* integration.
 
-Web Check is an Alexa skill that checks if any website is up. User can visit [alexa.agilesalt.com](https://alexa.agilesalt.com) to register websites, and say *Alexa, ask Web Check to check my sites*. Registered websites are saved on DynamoDB.
+Web Check is an Alexa skill that checks if any website is up. User can visit [alexa.agilesalt.net](https://alexa.agilesalt.net) to register websites, and say *Alexa, ask Web Check to check my sites*. Registered websites are saved on DynamoDB.
 
 ![System Overview](https://raw.githubusercontent.com/kennethchoe/alexa-web-check/master/resources/diagram.png)
 
@@ -20,7 +20,7 @@ Web Check is an Alexa skill that checks if any website is up. User can visit [al
 Amazon documentation is rather sporatic. I documented what I remember - if you hit any issues, open an Issue. I will try to follow up as much as I can and update my explanation.
 
 1. Follow steps described in [Create Alexa skill with Login with Amazon](https://developer.amazon.com/blogs/post/Tx3CX1ETRZZ2NPC/alexa-account-linking-5-steps-to-seamlessly-link-your-alexa-skill-with-login-with-amazon) to create Login with Amazon (LWA) Security Profile and an Alexa skill.
-2. On LWA Security Profile - Web Settings, specify Allowed Origins as your web site to be published, e.g. "https://alexa.agilesalt.com". Keep in mind that it accepts https only.
+2. On LWA Security Profile - Web Settings, specify Allowed Origins as your web site to be published, e.g. "https://alexa.agilesalt.net". Keep in mind that it accepts https only.
 3. On [IAM](https://console.aws.amazon.com/iam/home?region=us-east-1#/roles), create IAM Role - attach AWSLambdaBasicExecutionRole and AmazonDynamoDBFullAccess policy.
 4. [Set up IAM User](http://docs.aws.amazon.com/sdk-for-net/v3/developer-guide/net-dg-signup.html) with the role you made on step #3.
 
